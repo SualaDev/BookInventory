@@ -8,7 +8,7 @@ export class User {
   name: string;
 
   @Prop({ unique: [true, 'Duplicate email entered'] })
-  pemail: string;
+  email: string;
 
   @Prop()
   password: string;
