@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
@@ -13,5 +14,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.JWT_SECRET,
     });
+  }
+
+  async validate(payload) {
+    const { id } = payload;
+    const user = await this.userModel.findById(id);
+
+    if (!user) {
+      throw new UnauthorizedException('Login First to access this endpoint');
+    }
+    return user;
   }
 }
