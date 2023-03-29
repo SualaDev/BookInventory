@@ -3,7 +3,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema({
   timestamps: true,
 })
-export class User {
+export class User extends Document {
+  [x: string]: any;
   @Prop()
   name: string;
 
